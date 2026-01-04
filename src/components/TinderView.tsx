@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import type { AWSService } from '../types';
-import { shuffleArray } from '../utils/shuffleArray';
-import { useProgress } from '../hooks/useProgress';
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useProgress } from "../hooks/useProgress";
+import type { AWSService } from "../types";
+import { shuffleArray } from "../utils/shuffleArray";
 
 interface TinderViewProps {
   services: AWSService[];
@@ -19,7 +19,11 @@ export function TinderView({ services, onBack }: TinderViewProps) {
   const [shuffled, setShuffled] = useState<AWSService[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [cardState, setCardState] = useState<CardState>({ rotation: 0, translateX: 0, opacity: 1 });
+  const [cardState, setCardState] = useState<CardState>({
+    rotation: 0,
+    translateX: 0,
+    opacity: 1,
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [currentX, setCurrentX] = useState(0);
@@ -57,62 +61,76 @@ export function TinderView({ services, onBack }: TinderViewProps) {
     }
   }, [currentIndex, shuffled.length]);
 
-  const animateCardOut = useCallback((knew: boolean) => {
-    const direction = knew ? 500 : -500;
-    const rotation = knew ? 20 : -20;
+  const animateCardOut = useCallback(
+    (knew: boolean) => {
+      const direction = knew ? 500 : -500;
+      const rotation = knew ? 20 : -20;
 
-    const steps = 20;
-    let step = 0;
+      const steps = 20;
+      let step = 0;
 
-    const animate = () => {
-      step++;
-      const progress = step / steps;
-      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const animate = () => {
+        step++;
+        const progress = step / steps;
+        const easeOut = 1 - Math.pow(1 - progress, 3);
 
-      setCardState({
-        rotation: rotation * easeOut,
-        translateX: direction * easeOut,
-        opacity: 1 - easeOut * 0.5,
-      });
+        setCardState({
+          rotation: rotation * easeOut,
+          translateX: direction * easeOut,
+          opacity: 1 - easeOut * 0.5,
+        });
 
-      if (step < steps) {
-        requestAnimationFrame(animate);
+        if (step < steps) {
+          requestAnimationFrame(animate);
+        } else {
+          handleNextCard();
+        }
+      };
+
+      animate();
+    },
+    [handleNextCard]
+  );
+
+  const handleCardAction = useCallback(
+    (knew: boolean) => {
+      // Access currentService from shuffled array using currentIndex
+      const service = shuffled[currentIndex];
+      if (knew) {
+        addMasteredService(service.serviceName);
+        setSessionStats((prev) => ({ ...prev, known: prev.known + 1 }));
       } else {
-        handleNextCard();
+        addReviewService(service.serviceName);
+        setSessionStats((prev) => ({ ...prev, learning: prev.learning + 1 }));
       }
-    };
 
-    animate();
-  }, [handleNextCard]);
-
-  const handleCardAction = useCallback((knew: boolean) => {
-    if (knew) {
-      addMasteredService(currentService.serviceName);
-      setSessionStats((prev) => ({ ...prev, known: prev.known + 1 }));
-    } else {
-      addReviewService(currentService.serviceName);
-      setSessionStats((prev) => ({ ...prev, learning: prev.learning + 1 }));
-    }
-
-    animateCardOut(knew);
-  }, [currentService.serviceName, addMasteredService, addReviewService, animateCardOut]);
+      animateCardOut(knew);
+    },
+    [
+      shuffled,
+      currentIndex,
+      addMasteredService,
+      addReviewService,
+      animateCardOut,
+    ]
+  );
 
   // Keyboard controls - must come before early return
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (shuffled.length === 0) return;
-      if (e.key === 'ArrowRight') {
+      if (e.key === "ArrowRight") {
         handleCardAction(true);
-      } else if (e.key === 'ArrowLeft') {
+      } else if (e.key === "ArrowLeft") {
         handleCardAction(false);
-      } else if (e.key === ' ') {
+      } else if (e.key === " ") {
         e.preventDefault();
         setIsFlipped((prev) => !prev);
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [shuffled.length, currentIndex, isFlipped, handleCardAction]);
 
   // Early return after all hooks
@@ -121,7 +139,9 @@ export function TinderView({ services, onBack }: TinderViewProps) {
       <div className="min-h-screen bg-gradient-to-br from-pink-600 to-rose-800 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white mb-4 mx-auto" />
-          <p className="text-white text-xl font-semibold">Loading swipe cards...</p>
+          <p className="text-white text-xl font-semibold">
+            Loading swipe cards...
+          </p>
         </div>
       </div>
     );
@@ -200,25 +220,31 @@ export function TinderView({ services, onBack }: TinderViewProps) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-600 to-teal-800 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Session Complete!</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">
+            Session Complete!
+          </h2>
 
           <div className="grid grid-cols-2 gap-4 mb-8">
             <div className="bg-green-50 rounded-lg p-4">
-              <p className="text-3xl font-bold text-green-600">{sessionStats.known}</p>
+              <p className="text-3xl font-bold text-green-600">
+                {sessionStats.known}
+              </p>
               <p className="text-gray-600 font-semibold mt-2">Know It</p>
             </div>
             <div className="bg-yellow-50 rounded-lg p-4">
-              <p className="text-3xl font-bold text-yellow-600">{sessionStats.learning}</p>
+              <p className="text-3xl font-bold text-yellow-600">
+                {sessionStats.learning}
+              </p>
               <p className="text-gray-600 font-semibold mt-2">Review</p>
             </div>
           </div>
 
           <p className="text-gray-600 mb-6">
             {sessionStats.known === shuffled.length
-              ? '🎉 Perfect! You know all these services!'
+              ? "🎉 Perfect! You know all these services!"
               : sessionStats.known > sessionStats.learning
-                ? '👍 Great job! Keep it up!'
-                : '💪 Keep practicing!'}
+              ? "👍 Great job! Keep it up!"
+              : "💪 Keep practicing!"}
           </p>
 
           <button
@@ -270,7 +296,9 @@ export function TinderView({ services, onBack }: TinderViewProps) {
         <div className="w-full bg-white bg-opacity-20 rounded-full h-3">
           <div
             className="bg-white rounded-full h-3 transition-all duration-300"
-            style={{ width: `${((currentIndex + 1) / shuffled.length) * 100}%` }}
+            style={{
+              width: `${((currentIndex + 1) / shuffled.length) * 100}%`,
+            }}
           />
         </div>
       </div>
@@ -297,14 +325,18 @@ export function TinderView({ services, onBack }: TinderViewProps) {
           <div className="w-full h-full flex items-center justify-center p-8 text-center">
             {!isFlipped ? (
               <div>
-                <p className="text-gray-400 text-sm font-medium mb-4">SERVICE</p>
+                <p className="text-gray-400 text-sm font-medium mb-4">
+                  SERVICE
+                </p>
                 <h2 className="text-4xl font-bold text-pink-600 mb-6 break-words">
                   {currentService.serviceName}
                 </h2>
                 <p className="text-gray-600 mb-8 text-lg font-semibold">
                   {currentService.category}
                 </p>
-                <p className="text-sm text-gray-400 animate-bounce">Click to reveal →</p>
+                <p className="text-sm text-gray-400 animate-bounce">
+                  Click to reveal →
+                </p>
               </div>
             ) : (
               <div className="text-left">
@@ -329,10 +361,14 @@ export function TinderView({ services, onBack }: TinderViewProps) {
           {isDragging && (
             <div className="absolute inset-0 flex items-center justify-between px-8 pointer-events-none">
               {currentX > 0 && (
-                <div className="text-4xl font-bold text-green-500 opacity-70">✓ KNOW</div>
+                <div className="text-4xl font-bold text-green-500 opacity-70">
+                  ✓ KNOW
+                </div>
               )}
               {currentX < 0 && (
-                <div className="text-4xl font-bold text-red-500 opacity-70 ml-auto">REVIEW ⟳</div>
+                <div className="text-4xl font-bold text-red-500 opacity-70 ml-auto">
+                  REVIEW ⟳
+                </div>
               )}
             </div>
           )}
@@ -362,14 +398,15 @@ export function TinderView({ services, onBack }: TinderViewProps) {
           onClick={() => setIsFlipped(!isFlipped)}
           className="w-full px-6 py-3 bg-orange-500 text-white rounded-lg font-bold hover:bg-orange-600 transition-colors focus:outline-none focus:ring-4 focus:ring-orange-300"
         >
-          {isFlipped ? '← Show Service' : 'Show Details →'} (SPACE)
+          {isFlipped ? "← Show Service" : "Show Details →"} (SPACE)
         </button>
 
         {/* Stats */}
         <div className="bg-white rounded-lg p-4 shadow-lg text-center">
           <p className="text-sm font-bold text-gray-800">
-            ✓ Know: <span className="text-green-600">{sessionStats.known}</span> |
-            ⟳ Review: <span className="text-red-600">{sessionStats.learning}</span>
+            ✓ Know: <span className="text-green-600">{sessionStats.known}</span>{" "}
+            | ⟳ Review:{" "}
+            <span className="text-red-600">{sessionStats.learning}</span>
           </p>
         </div>
 
