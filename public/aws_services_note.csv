@@ -1,0 +1,151 @@
+﻿Category,Service Name,Knowledge Depth,Problem Solved,Scenario & Solution
+Analytics,Amazon Athena,1,Query S3 data using SQL without ETL/infrastructure,Q: Need to analyze 100TB of logs in S3 using SQL queries. A: Use Athena for serverless SQL queries directly on S3 data
+Analytics,AWS Data Exchange,2,Subscribe to third-party data providers securely,Q: Need external market data for ML models. A: Use Data Exchange to subscribe to third-party data feeds
+Analytics,Amazon Data Firehose,1,Stream data to S3/Redshift/OpenSearch without code,Q: Need to load streaming clickstream data into S3 every 5 minutes. A: Use Firehose to automatically buffer and deliver streams to S3
+Analytics,Amazon EMR,1,"Run big data frameworks (Spark, Hadoop) at scale",Q: Process 50TB daily logs using Spark. A: Use EMR for managed Spark clusters with auto-scaling
+Analytics,AWS Glue,1,ETL jobs and data catalog without managing servers,Q: Transform CSV files in S3 to Parquet for Athena. A: Use Glue ETL jobs with crawler to catalog and transform data
+Analytics,Amazon Kinesis Data Streams,1,Collect and process real-time streaming data,Q: Ingest 10K IoT events/sec for real-time processing. A: Use Kinesis Data Streams with multiple shards for parallel processing
+Analytics,AWS Lake Formation,1,Build secure data lakes with fine-grained access control,Q: Need column-level permissions for data lake. A: Use Lake Formation for centralized security and governance
+Analytics,Amazon Managed Service for Apache Flink,2,Real-time stream processing with Apache Flink,Q: Complex stream joins and windowing operations. A: Use Managed Flink for stateful stream processing
+Analytics,Amazon Managed Streaming for Apache Kafka (Amazon MSK),1,Managed Kafka clusters for event streaming,Q: Microservices need event-driven communication. A: Use MSK for managed Kafka with auto-scaling and monitoring
+Analytics,Amazon OpenSearch Service,1,"Search, analyze, and visualize log/text data",Q: Full-text search across application logs with dashboards. A: Use OpenSearch for log analytics and visualization
+Analytics,Amazon QuickSight,2,Business intelligence dashboards without infrastructure,Q: Create interactive dashboards for executives. A: Use QuickSight for serverless BI with ML insights
+Application Integration,Amazon AppFlow,2,Transfer data between SaaS apps and AWS,Q: Sync Salesforce data to S3 every hour. A: Use AppFlow for no-code SaaS integration
+Application Integration,AWS AppSync,1,Managed GraphQL API with real-time subscriptions,Q: Build mobile app needing real-time data sync. A: Use AppSync for GraphQL API with offline/real-time support
+Application Integration,Amazon EventBridge,0,Event-driven architecture with routing rules,Q: Route EC2 state changes to different Lambda functions. A: Use EventBridge for event filtering and routing to multiple targets
+Application Integration,Amazon MQ,2,Managed message broker for legacy apps (ActiveMQ/RabbitMQ),Q: Migrate on-prem ActiveMQ to cloud. A: Use Amazon MQ for lift-and-shift with minimal code changes
+Application Integration,Amazon Simple Notification Service (Amazon SNS),0,Pub/sub messaging to multiple subscribers,"Q: Send order notifications to email, SMS, and Lambda. A: Use SNS with multiple subscription protocols"
+Application Integration,Amazon Simple Queue Service (Amazon SQS),0,Decouple services with reliable message queuing,Q: Buffer requests between web tier and processing tier. A: Use SQS for decoupling with automatic retries and DLQ
+Application Integration,AWS Step Functions,0,Orchestrate workflows across AWS services,Q: Coordinate ETL pipeline with error handling. A: Use Step Functions for visual workflow with built-in error retry
+Blockchain,Amazon Managed Blockchain,2,Create blockchain networks without infrastructure,Q: Build supply chain tracking on Hyperledger. A: Use Managed Blockchain for scalable blockchain networks
+Business Applications,Amazon Simple Email Service (Amazon SES),1,Send transactional/marketing emails at scale,Q: Send 1M order confirmation emails daily. A: Use SES for reliable email delivery with analytics
+Cloud Financial Management,AWS Budgets,1,Set cost/usage alerts and RI coverage tracking,Q: Alert when monthly spend exceeds $10K. A: Use Budgets with SNS notifications for cost thresholds
+Cloud Financial Management,AWS Cost and Usage Report,1,Detailed billing data for analysis,Q: Analyze costs by tag and service for chargeback. A: Use Cost and Usage Report delivered to S3 for detailed analysis
+Cloud Financial Management,AWS Cost Explorer,1,Visualize and analyze AWS costs,Q: Identify cost anomalies and trends. A: Use Cost Explorer for historical analysis and forecasting
+Cloud Financial Management,Savings Plans,1,Commit to usage for discounts (more flexible than RIs),Q: Reduce compute costs across EC2/Fargate/Lambda. A: Use Compute Savings Plans for 66% discount with flexibility
+Compute,AWS App Runner,1,Deploy containerized web apps without infrastructure,Q: Deploy Node.js API from GitHub without K8s knowledge. A: Use App Runner for automatic deployment from source
+Compute,AWS Auto Scaling,0,Scale multiple resources together based on demand,"Q: Scale EC2, ECS, and DynamoDB together. A: Use Auto Scaling plans for unified scaling policies"
+Compute,AWS Batch,1,Run batch jobs at any scale,Q: Process nightly data pipeline with varying load. A: Use Batch for job queuing and automatic resource provisioning
+Compute,AWS Elastic Beanstalk,1,Deploy web apps without managing infrastructure,Q: Deploy Python Django app quickly. A: Use Beanstalk for automatic provisioning and load balancing
+Compute,Amazon Elastic Compute Cloud (Amazon EC2),0,Virtual servers with full control,Q: Run Windows domain controller in cloud. A: Use EC2 for complete OS control with various instance types
+Compute,Amazon EC2 Auto Scaling,0,Automatically adjust EC2 capacity,Q: Handle traffic spikes automatically. A: Use EC2 Auto Scaling with target tracking for CPU utilization
+Compute,AWS Fargate,1,Run containers without managing servers,Q: Run microservices without EC2 management. A: Use Fargate for serverless container execution
+Compute,AWS Lambda,0,"Run code without servers, pay per request",Q: Resize images when uploaded to S3. A: Use Lambda triggered by S3 events for event-driven processing
+Compute,Amazon Lightsail,2,Simple VPS for small projects with predictable pricing,"Q: Host WordPress blog cheaply. A: Use Lightsail for simple, bundled pricing"
+Compute,AWS Outposts,1,Run AWS services on-premises,Q: Low-latency processing for factory IoT. A: Use Outposts for local AWS infrastructure
+Compute,AWS Wavelength,2,Ultra-low latency for 5G applications,Q: AR/VR app needs <10ms latency. A: Use Wavelength Zones at 5G edge
+Containers,Amazon Elastic Container Registry (Amazon ECR),1,Store and manage Docker images,Q: Private Docker registry with vulnerability scanning. A: Use ECR with image scanning and IAM integration
+Containers,Amazon Elastic Container Service (Amazon ECS),0,Orchestrate Docker containers on AWS,Q: Run microservices with service discovery. A: Use ECS with ALB and CloudMap for container orchestration
+Containers,Amazon ECS Anywhere,2,Run ECS on your own infrastructure,Q: Use ECS control plane for on-prem containers. A: Use ECS Anywhere for hybrid container management
+Containers,Amazon Elastic Kubernetes Service (Amazon EKS),0,Managed Kubernetes clusters,Q: Run K8s workloads without managing control plane. A: Use EKS for managed K8s with automatic upgrades
+Containers,Amazon EKS Anywhere,2,Run EKS on your own infrastructure,Q: Kubernetes on-prem with AWS tooling. A: Use EKS Anywhere for consistent K8s everywhere
+Containers,Amazon EKS Distro,2,Same K8s version as EKS for self-managed clusters,Q: Match EKS version in development. A: Use EKS Distro for version consistency
+Database,Amazon Aurora,0,MySQL/PostgreSQL with 5x performance and HA,Q: Need PostgreSQL with automatic failover. A: Use Aurora with Multi-AZ for high availability
+Database,Amazon Aurora Serverless,1,Auto-scaling Aurora for intermittent workloads,Q: Dev database used 2 hours daily. A: Use Aurora Serverless to auto-pause and save costs
+Database,Amazon DocumentDB (with MongoDB compatibility),1,"MongoDB-compatible database, fully managed",Q: Migrate MongoDB with minimal code changes. A: Use DocumentDB for managed MongoDB-compatible service
+Database,Amazon DynamoDB,0,NoSQL database with single-digit millisecond latency,"Q: Session store for millions of users. A: Use DynamoDB for fast, scalable key-value storage"
+Database,Amazon ElastiCache,0,In-memory caching (Redis/Memcached),Q: Cache database queries for sub-millisecond response. A: Use ElastiCache Redis with cluster mode
+Database,Amazon Keyspaces (for Apache Cassandra),2,Managed Cassandra-compatible database,Q: Migrate Cassandra workload to managed service. A: Use Keyspaces for serverless Cassandra
+Database,Amazon Neptune,2,Graph database for connected data,Q: Social network relationship queries. A: Use Neptune for graph traversals and pattern matching
+Database,Amazon Relational Database Service (Amazon RDS),0,"Managed relational databases (MySQL, PostgreSQL, etc.)",Q: Run MySQL without patching/backups management. A: Use RDS for automated backups and maintenance
+Database,Amazon Redshift,1,Data warehouse for analytics on petabyte scale,Q: Analyze 500TB of sales data with SQL. A: Use Redshift for columnar storage and parallel queries
+Database,Amazon Timestream,2,Time-series database for IoT/operational data,Q: Store 1M IoT sensor readings/sec with retention tiers. A: Use Timestream for automatic tiering and compression
+Developer Tools,AWS CodeArtifact,2,"Artifact repository for npm, Maven, PyPI packages",Q: Private npm registry with approval workflow. A: Use CodeArtifact for secure package management
+Developer Tools,AWS CodeBuild,1,Build and test code without build servers,Q: Run tests on every commit. A: Use CodeBuild for serverless CI with custom Docker images
+Developer Tools,AWS CodeDeploy,1,"Automate deployments to EC2, Lambda, ECS",Q: Blue/green deployment with automatic rollback. A: Use CodeDeploy for deployment strategies and traffic shifting
+Developer Tools,Amazon CodeGuru,2,ML-powered code reviews and performance recommendations,Q: Find performance bottlenecks in Java app. A: Use CodeGuru Profiler for runtime optimization suggestions
+Developer Tools,AWS CodePipeline,1,"CI/CD orchestration across build, test, deploy",Q: Automate release from GitHub to production. A: Use CodePipeline for end-to-end release automation
+Developer Tools,AWS X-Ray,1,Distributed tracing and performance analysis,Q: Debug latency in microservices. A: Use X-Ray for end-to-end request tracing and bottleneck identification
+End User Computing,Amazon AppStream 2.0,2,Stream desktop applications to browsers,Q: Deliver Windows apps to any device. A: Use AppStream for application streaming without VDI
+End User Computing,Amazon WorkSpaces,2,Managed virtual desktops (VDI),Q: Remote workforce needs secure Windows desktops. A: Use WorkSpaces for cloud-based virtual desktops
+Frontend Web and Mobile,AWS Amplify,2,Build full-stack web/mobile apps quickly,"Q: React app with auth, API, hosting. A: Use Amplify for integrated frontend/backend development"
+Frontend Web and Mobile,Amazon API Gateway,0,"Create, publish, and manage APIs at scale",Q: RESTful API with throttling and auth. A: Use API Gateway with Lambda for serverless APIs
+Frontend Web and Mobile,AWS Device Farm,2,Test mobile apps on real devices,Q: Test Android app on 100 device types. A: Use Device Farm for automated testing on real devices
+Frontend Web and Mobile,Amazon Pinpoint,2,"Customer engagement through email, SMS, push",Q: Send targeted push notifications based on user behavior. A: Use Pinpoint for segmented marketing campaigns
+Internet of Things (IoT),AWS IoT Core,1,Connect IoT devices to cloud securely,Q: Connect 10K sensors with MQTT. A: Use IoT Core for device connectivity and message routing
+Internet of Things (IoT),AWS IoT Device Defender,2,Audit and monitor IoT device security,Q: Detect abnormal IoT device behavior. A: Use IoT Device Defender for security audits and alerts
+Internet of Things (IoT),AWS IoT Device Management,2,"Onboard, organize, and remotely manage IoT devices",Q: Update firmware on 100K devices remotely. A: Use IoT Device Management for fleet management
+Internet of Things (IoT),AWS IoT Events,2,Detect and respond to IoT events,Q: Trigger actions when temperature exceeds threshold. A: Use IoT Events for event detection and automated response
+Internet of Things (IoT),AWS IoT Greengrass,2,Run AWS services at edge devices,Q: Run ML inference locally on IoT devices. A: Use Greengrass for local compute with cloud sync
+Internet of Things (IoT),AWS IoT SiteWise,2,Collect and analyze industrial equipment data,Q: Monitor factory equipment performance. A: Use IoT SiteWise for industrial data collection and analytics
+Internet of Things (IoT),AWS IoT Things Graph,2,Visually connect IoT devices and services,Q: Build IoT workflow without coding. A: Use IoT Things Graph for visual IoT application development
+Internet of Things (IoT),AWS IoT 1-Click,2,Simple device triggers for Lambda functions,Q: Physical button to trigger restocking order. A: Use IoT 1-Click for simple device-to-Lambda integration
+Machine Learning,Amazon Comprehend,2,"NLP for sentiment, entities, key phrases",Q: Analyze customer review sentiment. A: Use Comprehend for automatic sentiment detection
+Machine Learning,Amazon Fraud Detector,2,ML-based fraud detection,Q: Detect fraudulent online transactions. A: Use Fraud Detector with pre-built fraud models
+Machine Learning,Amazon Kendra,2,ML-powered enterprise search,Q: Natural language search across documents. A: Use Kendra for intelligent document search
+Machine Learning,Amazon Lex,2,Build conversational chatbots,Q: Customer service chatbot with intent recognition. A: Use Lex for voice/text bots with NLU
+Machine Learning,Amazon Personalize,2,ML-based recommendations,Q: Product recommendations like Amazon. A: Use Personalize for real-time recommendation engine
+Machine Learning,Amazon Polly,2,Text-to-speech in multiple languages,Q: Convert articles to audio podcasts. A: Use Polly for natural-sounding speech synthesis
+Machine Learning,Amazon Rekognition,2,"Image and video analysis (faces, objects, text)",Q: Detect inappropriate content in uploads. A: Use Rekognition for content moderation
+Machine Learning,Amazon SageMaker AI,1,"Build, train, and deploy ML models",Q: Train custom ML model and deploy with auto-scaling. A: Use SageMaker for end-to-end ML workflow
+Machine Learning,Amazon Textract,2,Extract text and data from documents,Q: Extract data from scanned invoices. A: Use Textract for OCR with table/form recognition
+Machine Learning,Amazon Transcribe,2,Speech-to-text with speaker identification,Q: Transcribe customer support calls. A: Use Transcribe for automatic speech recognition
+Machine Learning,Amazon Translate,2,Neural machine translation,Q: Translate website to 20 languages. A: Use Translate for automated language translation
+Management and Governance,AWS CloudFormation,0,Infrastructure as Code for AWS resources,Q: Deploy identical environments for dev/prod. A: Use CloudFormation templates for repeatable infrastructure
+Management and Governance,AWS CloudTrail,0,Audit API calls and user activity,Q: Track who deleted S3 bucket. A: Use CloudTrail for comprehensive API logging
+Management and Governance,Amazon CloudWatch,0,Monitor resources and applications,Q: Alert when CPU >80% for 5 minutes. A: Use CloudWatch alarms with SNS notification
+Management and Governance,Amazon CloudWatch Logs,0,Centralized log collection and analysis,Q: Search application logs from 50 servers. A: Use CloudWatch Logs with log groups and filters
+Management and Governance,AWS Command Line Interface (AWS CLI),1,Manage AWS services from command line,Q: Automate resource provisioning with scripts. A: Use AWS CLI for programmatic access
+Management and Governance,AWS Compute Optimizer,1,ML-based resource optimization recommendations,Q: Right-size EC2 instances to reduce costs. A: Use Compute Optimizer for instance type recommendations
+Management and Governance,AWS Config,0,Track resource configuration changes and compliance,Q: Ensure all S3 buckets have encryption. A: Use Config rules for compliance monitoring
+Management and Governance,AWS Control Tower,1,Set up and govern multi-account AWS environment,Q: Create 50 accounts with security baselines. A: Use Control Tower for automated account factory
+Management and Governance,AWS Health Dashboard,2,View AWS service health and notifications,Q: Get alerts for EC2 maintenance. A: Use Health Dashboard for service-specific notifications
+Management and Governance,AWS License Manager,2,Manage software licenses across AWS,Q: Track Windows Server license usage. A: Use License Manager for license tracking and enforcement
+Management and Governance,Amazon Managed Grafana,2,Managed Grafana for metrics visualization,Q: Create dashboards for Prometheus data. A: Use Managed Grafana for pre-configured visualization
+Management and Governance,Amazon Managed Service for Prometheus,2,Managed Prometheus for container metrics,Q: Monitor Kubernetes without operating Prometheus. A: Use Managed Prometheus with auto-scaling
+Management and Governance,AWS Management Console,1,Web interface for managing AWS services,Q: Visual interface for occasional admin tasks. A: Use Management Console for GUI-based management
+Management and Governance,AWS Organizations,0,Centrally manage multiple AWS accounts,Q: Consolidated billing for 20 accounts with SCPs. A: Use Organizations for account hierarchy and policies
+Management and Governance,AWS Proton,2,Automated infrastructure for container/serverless apps,Q: Standardize deployment templates for teams. A: Use Proton for self-service infrastructure provisioning
+Management and Governance,AWS Service Catalog,1,Create approved IT service catalogs,Q: Let users launch pre-approved stacks. A: Use Service Catalog for governed self-service
+Management and Governance,Service Quotas,1,View and manage service limits,Q: Request VPC limit increase. A: Use Service Quotas console for limit management
+Management and Governance,AWS Systems Manager,1,Operational hub for AWS resources,Q: Patch 100 EC2 instances monthly. A: Use Systems Manager Patch Manager for automated patching
+Management and Governance,AWS Trusted Advisor,1,"Best practice recommendations (cost, security, performance)",Q: Find underutilized resources. A: Use Trusted Advisor for optimization recommendations
+Management and Governance,AWS Well-Architected Tool,1,Review architecture against AWS best practices,Q: Assess workload for security gaps. A: Use Well-Architected Tool for pillar-based review
+Media Services,Amazon Elastic Transcoder,2,Convert media files to various formats,Q: Convert videos for different devices. A: Use Elastic Transcoder for media format conversion
+Media Services,Amazon Kinesis Video Streams,2,Stream video from devices to AWS,Q: Stream security camera footage for analysis. A: Use Kinesis Video Streams for video ingestion
+Migration and Transfer,AWS Application Discovery Service,1,Discover on-premises resources for migration planning,Q: Inventory datacenter before cloud migration. A: Use Application Discovery for dependency mapping
+Migration and Transfer,AWS Application Migration Service,1,Lift-and-shift migration with minimal downtime,Q: Migrate 50 physical servers to AWS. A: Use Application Migration Service for automated replication
+Migration and Transfer,AWS Database Migration Service (AWS DMS),0,Migrate databases with minimal downtime,Q: Migrate Oracle to Aurora PostgreSQL. A: Use DMS with Schema Conversion Tool for heterogeneous migration
+Migration and Transfer,AWS DataSync,1,Automate data transfer to/from AWS,Q: Sync on-prem NFS to EFS daily. A: Use DataSync for scheduled data transfer with bandwidth throttling
+Migration and Transfer,AWS Migration Hub,2,Track migration progress across tools,Q: Monitor status of 100 server migrations. A: Use Migration Hub for centralized tracking
+Migration and Transfer,AWS Schema Conversion Tool (AWS SCT),1,Convert database schemas between engines,Q: Convert Oracle procedures to PostgreSQL. A: Use SCT to assess and convert schema
+Migration and Transfer,AWS Snow Family,1,Physical data transfer for large datasets,Q: Transfer 100TB to AWS from limited bandwidth site. A: Use Snowball Edge for offline data transfer
+Migration and Transfer,AWS Transfer Family,1,SFTP/FTPS/FTP access to S3/EFS,Q: Partners upload files via SFTP to S3. A: Use Transfer Family for managed SFTP with S3 backend
+Networking and Content Delivery,Amazon CloudFront,0,Global CDN for low-latency content delivery,Q: Distribute static assets worldwide with low latency. A: Use CloudFront for edge caching
+Networking and Content Delivery,AWS Direct Connect,0,Dedicated network connection to AWS,Q: Need consistent 10Gbps to AWS for hybrid cloud. A: Use Direct Connect for private connectivity
+Networking and Content Delivery,Elastic Load Balancing (ELB),0,Distribute traffic across multiple targets,Q: Load balance HTTPS traffic to EC2 instances. A: Use ALB with path-based routing and SSL termination
+Networking and Content Delivery,AWS Global Accelerator,1,Improve global application availability and performance,Q: Reduce latency for global users using static IPs. A: Use Global Accelerator for anycast routing
+Networking and Content Delivery,AWS PrivateLink,0,Private connectivity to services without internet,Q: Access S3 from VPC without NAT/IGW. A: Use PrivateLink VPC endpoints for private access
+Networking and Content Delivery,Amazon Route 53,0,Scalable DNS with health checks and routing policies,Q: DNS failover between regions. A: Use Route 53 with health checks and failover routing
+Networking and Content Delivery,AWS Transit Gateway,0,Connect thousands of VPCs and on-premises networks,Q: Hub-and-spoke network for 50 VPCs. A: Use Transit Gateway for centralized routing
+Networking and Content Delivery,Amazon Virtual Private Cloud (Amazon VPC),0,Isolated virtual network for AWS resources,Q: Launch resources in private network with subnets. A: Use VPC with public/private subnets and NAT
+Networking and Content Delivery,AWS VPN,0,Encrypted connection between on-premises and AWS,Q: Secure connection from office to VPC. A: Use Site-to-Site VPN for encrypted tunnel
+Security Identity and Compliance,AWS Artifact,2,Access compliance reports and agreements,Q: Download SOC 2 report for audit. A: Use Artifact for on-demand compliance documentation
+Security Identity and Compliance,AWS Audit Manager,1,Automate audit evidence collection,Q: Prepare for PCI DSS audit. A: Use Audit Manager for continuous compliance assessment
+Security Identity and Compliance,AWS Certificate Manager (ACM),1,Provision and manage SSL/TLS certificates,Q: Free SSL certificate for ALB. A: Use ACM for automated certificate provisioning and renewal
+Security Identity and Compliance,AWS CloudHSM,1,Hardware security module for key management,Q: FIPS 140-2 Level 3 compliance for keys. A: Use CloudHSM for dedicated HSM appliance
+Security Identity and Compliance,Amazon Cognito,1,User authentication and authorization for apps,Q: Add sign-up/sign-in to mobile app. A: Use Cognito for user pools with OAuth/SAML
+Security Identity and Compliance,Amazon Detective,2,Analyze security findings and investigate incidents,Q: Investigate GuardDuty finding root cause. A: Use Detective for visual security investigation
+Security Identity and Compliance,AWS Directory Service,1,Managed Active Directory in AWS,Q: Domain join EC2 instances. A: Use Directory Service for managed Microsoft AD
+Security Identity and Compliance,AWS Firewall Manager,1,Centrally configure firewall rules across accounts,Q: Apply WAF rules to all ALBs in Organization. A: Use Firewall Manager for centralized security policies
+Security Identity and Compliance,Amazon GuardDuty,1,Threat detection using ML,Q: Detect compromised EC2 instances. A: Use GuardDuty for continuous threat monitoring
+Security Identity and Compliance,AWS IAM Identity Center,1,Single sign-on across AWS accounts and apps,Q: SSO for employees across 20 AWS accounts. A: Use IAM Identity Center for centralized access
+Security Identity and Compliance,AWS Identity and Access Management (IAM),0,Manage access to AWS services securely,Q: Grant least-privilege access to developers. A: Use IAM roles and policies for fine-grained permissions
+Security Identity and Compliance,Amazon Inspector,1,Automated security assessment for EC2/containers,Q: Scan EC2 for vulnerabilities. A: Use Inspector for automated security assessments
+Security Identity and Compliance,AWS Key Management Service (AWS KMS),0,Create and control encryption keys,Q: Encrypt S3 data with customer-managed keys. A: Use KMS for centralized key management
+Security Identity and Compliance,Amazon Macie,1,Discover and protect sensitive data in S3,Q: Find PII in S3 buckets. A: Use Macie for automated sensitive data discovery
+Security Identity and Compliance,AWS Network Firewall,1,Managed firewall for VPC traffic filtering,Q: IDS/IPS and domain filtering for VPC. A: Use Network Firewall for stateful inspection
+Security Identity and Compliance,AWS Resource Access Manager (AWS RAM),1,Share AWS resources across accounts,Q: Share Transit Gateway with other accounts. A: Use RAM for cross-account resource sharing
+Security Identity and Compliance,AWS Secrets Manager,0,"Rotate, manage, and retrieve secrets",Q: Rotate RDS password automatically. A: Use Secrets Manager for automatic secret rotation
+Security Identity and Compliance,AWS Security Hub,1,Centralized security and compliance view,"Q: Aggregate findings from GuardDuty, Inspector, Macie. A: Use Security Hub for unified security dashboard"
+Security Identity and Compliance,AWS Security Token Service (AWS STS),0,Temporary credentials for users/applications,Q: Grant temporary access to federated users. A: Use STS to assume roles with temporary credentials
+Security Identity and Compliance,AWS Shield,1,DDoS protection for applications,Q: Protect website from DDoS attacks. A: Use Shield Standard (free) or Advanced (24/7 DRT support)
+Security Identity and Compliance,AWS WAF,0,Web application firewall to filter HTTP requests,Q: Block SQL injection and XSS attacks. A: Use WAF with managed rules on ALB/CloudFront
+Storage,AWS Backup,1,Centralized backup across AWS services,"Q: Backup all EBS, RDS, DynamoDB with retention policies. A: Use AWS Backup for automated backup management"
+Storage,Amazon Elastic Block Store (Amazon EBS),0,Block storage for EC2 instances,Q: Persistent storage for database on EC2. A: Use EBS with provisioned IOPS for high performance
+Storage,AWS Elastic Disaster Recovery,1,"Fast, reliable disaster recovery",Q: RPO/RTO in minutes for critical apps. A: Use Elastic Disaster Recovery for continuous replication
+Storage,Amazon Elastic File System (Amazon EFS),0,Managed NFS for shared file storage,Q: Shared storage for multiple EC2 instances. A: Use EFS for concurrent access with auto-scaling
+Storage,Amazon FSx (for all types),1,"Managed third-party file systems (Lustre, Windows, NetApp)",Q: Windows File Server with SMB access. A: Use FSx for Windows File Server with AD integration
+Storage,Amazon Simple Storage Service (Amazon S3),0,Object storage for any amount of data,Q: Store application logs with lifecycle policies. A: Use S3 with Intelligent-Tiering for cost optimization
+Storage,Amazon S3 Glacier,1,Low-cost archival storage,Q: Archive compliance data for 7 years. A: Use S3 Glacier Deep Archive for long-term retention
+Storage,AWS Storage Gateway,1,Hybrid storage between on-premises and cloud,Q: Extend on-prem storage to S3. A: Use File Gateway for NFS/SMB to S3 integration
