@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { AWSService } from '../types';
 import { shuffleArray } from '../utils/shuffleArray';
 import { useProgress } from '../hooks/useProgress';
@@ -35,13 +35,18 @@ export function FlashcardView({ services, onBack }: FlashcardViewProps) {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [shuffled.length]);
 
-  useEffect(() => {
+  const initializeCards = useCallback(() => {
     if (services.length === 0) return;
     const serviceList = isShuffle ? shuffleArray(services) : services;
     setShuffled(serviceList);
     setCurrentIndex(0);
     setIsFlipped(false);
   }, [services, isShuffle]);
+
+   
+  useEffect(() => {
+    initializeCards();
+  }, [initializeCards]);
 
   // Early return with loading state - after all hooks
   if (shuffled.length === 0) {

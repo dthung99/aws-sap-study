@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import type { AWSService } from '../types';
 import { shuffleArray } from '../utils/shuffleArray';
 import { useProgress } from '../hooks/useProgress';
@@ -46,52 +46,18 @@ export function TinderView({ services, onBack }: TinderViewProps) {
     return () => clearTimeout(timer);
   }, [currentIndex, isFlipped, shuffled.length]);
 
-  // Keyboard controls - must come before early return
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (shuffled.length === 0) return;
-      if (e.key === 'ArrowRight') {
-        handleCardAction(true);
-      } else if (e.key === 'ArrowLeft') {
-        handleCardAction(false);
-      } else if (e.key === ' ') {
-        e.preventDefault();
-        setIsFlipped((prev) => !prev);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [shuffled.length, currentIndex, isFlipped]);
-
-  // Early return after all hooks
-  if (shuffled.length === 0) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-600 to-rose-800 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white mb-4 mx-auto" />
-          <p className="text-white text-xl font-semibold">Loading swipe cards...</p>
-        </div>
-      </div>
-    );
-  }
-
-  const currentService = shuffled[currentIndex];
-  const remaining = shuffled.length - currentIndex - 1;
-
-  const handleCardAction = (knew: boolean) => {
-    if (knew) {
-      addMasteredService(currentService.serviceName);
-      setSessionStats((prev) => ({ ...prev, known: prev.known + 1 }));
+  const handleNextCard = useCallback(() => {
+    if (currentIndex + 1 >= shuffled.length) {
+      setShowComplete(true);
     } else {
-      addReviewService(currentService.serviceName);
-      setSessionStats((prev) => ({ ...prev, learning: prev.learning + 1 }));
+      setCurrentIndex((prev) => prev + 1);
+      setIsFlipped(false);
+      setCardState({ rotation: 0, translateX: 0, opacity: 1 });
+      setCurrentX(0);
     }
+  }, [currentIndex, shuffled.length]);
 
-    animateCardOut(knew);
-  };
-
-  const animateCardOut = (knew: boolean) => {
+  const animateCardOut = useCallback((knew: boolean) => {
     const direction = knew ? 500 : -500;
     const rotation = knew ? 20 : -20;
 
@@ -117,18 +83,52 @@ export function TinderView({ services, onBack }: TinderViewProps) {
     };
 
     animate();
-  };
+  }, [handleNextCard]);
 
-  const handleNextCard = () => {
-    if (currentIndex + 1 >= shuffled.length) {
-      setShowComplete(true);
+  const handleCardAction = useCallback((knew: boolean) => {
+    if (knew) {
+      addMasteredService(currentService.serviceName);
+      setSessionStats((prev) => ({ ...prev, known: prev.known + 1 }));
     } else {
-      setCurrentIndex((prev) => prev + 1);
-      setIsFlipped(false);
-      setCardState({ rotation: 0, translateX: 0, opacity: 1 });
-      setCurrentX(0);
+      addReviewService(currentService.serviceName);
+      setSessionStats((prev) => ({ ...prev, learning: prev.learning + 1 }));
     }
-  };
+
+    animateCardOut(knew);
+  }, [currentService.serviceName, addMasteredService, addReviewService, animateCardOut]);
+
+  // Keyboard controls - must come before early return
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (shuffled.length === 0) return;
+      if (e.key === 'ArrowRight') {
+        handleCardAction(true);
+      } else if (e.key === 'ArrowLeft') {
+        handleCardAction(false);
+      } else if (e.key === ' ') {
+        e.preventDefault();
+        setIsFlipped((prev) => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [shuffled.length, currentIndex, isFlipped, handleCardAction]);
+
+  // Early return after all hooks
+  if (shuffled.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pink-600 to-rose-800 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white mb-4 mx-auto" />
+          <p className="text-white text-xl font-semibold">Loading swipe cards...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentService = shuffled[currentIndex];
+  const remaining = shuffled.length - currentIndex - 1;
 
   // Mouse/Touch tracking
   const handleMouseDown = (e: React.MouseEvent) => {

@@ -9,7 +9,11 @@
       "Bash(curl:*)",
       "Bash(cat:*)",
       "Bash(npm run build:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(npm run lint)",
+      "Bash(npx husky install)",
+      "Bash(npx husky:*)",
+      "Bash(npm run lint:*)"
     ]
   }
 }

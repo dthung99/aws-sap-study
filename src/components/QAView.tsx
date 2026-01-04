@@ -23,18 +23,6 @@ export function QAView({ services, onBack }: QAViewProps) {
   const [score, setScore] = useState(0);
   const [quizComplete, setQuizComplete] = useState(false);
 
-  // Generate questions on component mount or when services change
-  useEffect(() => {
-    if (services.length === 0) return;
-    const generatedQuestions = generateQuestions(services, 20);
-    setQuestions(generatedQuestions);
-    setCurrentIndex(0);
-    setSelectedAnswer(null);
-    setAnswered(false);
-    setScore(0);
-    setQuizComplete(false);
-  }, [services]);
-
   function generateQuestions(serviceList: AWSService[], count: number): Question[] {
     const selectedServices = getRandomItems(serviceList, Math.min(count, serviceList.length));
 
@@ -53,6 +41,19 @@ export function QAView({ services, onBack }: QAViewProps) {
       };
     });
   }
+
+  // Generate questions on component mount or when services change
+   
+  useEffect(() => {
+    if (services.length === 0) return;
+    const generatedQuestions = generateQuestions(services, 20);
+    setQuestions(generatedQuestions);
+    setCurrentIndex(0);
+    setSelectedAnswer(null);
+    setAnswered(false);
+    setScore(0);
+    setQuizComplete(false);
+  }, [services]);
 
   if (questions.length === 0) {
     return (
