@@ -72,13 +72,11 @@ export function AdvancedQAView({ services, onBack }: AdvancedQAViewProps) {
   };
 
   const getProgressPercentage = (packageId: string) => {
-    const pkg = config?.packages.find((p) => p.id === packageId);
-    if (!pkg) return 0;
-
     const prog = progress[packageId];
-    if (!prog) return 0;
+    if (!prog || prog.completed === 0) return 0;
 
-    return Math.round((prog.completed / pkg.totalQuestions) * 100);
+    // Calculate percentage based on correct answers
+    return Math.round((prog.correct / prog.completed) * 100);
   };
 
   if (loading) {
@@ -243,8 +241,8 @@ export function AdvancedQAView({ services, onBack }: AdvancedQAViewProps) {
                         <div className="flex justify-between text-sm text-gray-600 mb-1">
                           <span>Progress</span>
                           <span>
-                            {prog?.completed || 0}/{pkg.totalQuestions} (
-                            {percentage}%)
+                            {prog?.correct || 0}/{prog?.completed || 0} correct (
+                            {prog?.completed ? Math.round((prog.correct / prog.completed) * 100) : 0}%)
                           </span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">

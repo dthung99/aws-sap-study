@@ -57,9 +57,7 @@ export function AdvancedQAQuizView({ services, onBack }: AdvancedQAQuizViewProps
     const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
 
     const handleComplete = () => {
-      if (packageId) {
-        updateProgress(packageId, score, totalQuestions);
-      }
+      // Progress already saved in handleNextQuestion
       routeNavigate('/advanced-qa');
     };
 
@@ -118,6 +116,11 @@ export function AdvancedQAQuizView({ services, onBack }: AdvancedQAQuizViewProps
   };
 
   const handleNextQuestion = () => {
+    // Update progress after each answer
+    if (packageId) {
+      updateProgress(packageId, score, questions.length);
+    }
+
     if (currentIndex + 1 >= questions.length) {
       setQuizComplete(true);
     } else {
@@ -135,14 +138,25 @@ export function AdvancedQAQuizView({ services, onBack }: AdvancedQAQuizViewProps
           <h1 className="text-3xl font-bold text-white">Advanced Q&A</h1>
           <p className="text-purple-100 text-sm mt-1">{packageName}</p>
         </div>
-        <button
-          onClick={() => {
-            routeNavigate('/advanced-qa');
-          }}
-          className="px-4 py-2 bg-white text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-colors"
-        >
-          ← Back
-        </button>
+        <div className="flex gap-3">
+          {answered && (
+            <button
+              onClick={handleNextQuestion}
+              disabled={!answered}
+              className="px-4 py-2 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              {currentIndex + 1 >= questions.length ? '✓ Complete' : 'Next →'}
+            </button>
+          )}
+          <button
+            onClick={() => {
+              routeNavigate('/advanced-qa');
+            }}
+            className="px-4 py-2 bg-white text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-colors"
+          >
+            ← Back
+          </button>
+        </div>
       </div>
 
       {/* Progress */}
@@ -247,15 +261,6 @@ export function AdvancedQAQuizView({ services, onBack }: AdvancedQAQuizViewProps
             </>
           )}
 
-          {/* Next Button */}
-          {answered && (
-            <button
-              onClick={handleNextQuestion}
-              className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors focus:outline-none focus:ring-4 focus:ring-purple-300"
-            >
-              {currentIndex + 1 >= questions.length ? 'Complete Quiz' : 'Next Question'}
-            </button>
-          )}
         </div>
       </div>
     </div>
