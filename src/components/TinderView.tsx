@@ -40,7 +40,6 @@ export function TinderView({ services, onBack }: TinderViewProps) {
     setShowComplete(false);
   }, [services]);
 
-
   const handleNextCard = useCallback(() => {
     if (currentIndex + 1 >= shuffled.length) {
       setShowComplete(true);
@@ -387,10 +386,7 @@ export function TinderView({ services, onBack }: TinderViewProps) {
                 </p>
               </div>
             ) : (
-              <div className="text-left">
-                <p className="text-xs font-semibold text-pink-600 uppercase tracking-wider mb-3">
-                  Problem
-                </p>
+              <div className="text-left max-h-80 overflow-y-auto">
                 <p className="text-lg font-bold text-gray-800 mb-6">
                   {currentService.problemSolved}
                 </p>
@@ -398,8 +394,15 @@ export function TinderView({ services, onBack }: TinderViewProps) {
                 <p className="text-xs font-semibold text-pink-600 uppercase tracking-wider mb-2">
                   Solution
                 </p>
-                <p className="text-sm text-gray-700 leading-relaxed line-clamp-4">
+                <p className="text-sm text-gray-700 leading-relaxed mb-4">
                   {currentService.scenarioAndSolution}
+                </p>
+                <hr className="my-4 border-gray-300" />
+                <p className="text-xs font-semibold text-pink-600 uppercase tracking-wider mb-2">
+                  How to Use
+                </p>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  {currentService.simpleStepByStepUsage}
                 </p>
               </div>
             )}

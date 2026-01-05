@@ -22,6 +22,7 @@ export function useAWSServices() {
             knowledgeDepth: obj.knowledgeDepth,
             problemSolved: obj.problemSolved,
             scenarioAndSolution: obj.scenarioAndSolution,
+            simpleStepByStepUsage: obj.simpleStepByStepUsage,
           }));
         setServices(parsedServices);
         setError(null);

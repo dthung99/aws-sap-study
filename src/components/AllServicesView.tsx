@@ -184,9 +184,13 @@ export function AllServicesView({ services, onBack }: AllServicesViewProps) {
                       <h4 className="font-semibold text-gray-700 mb-2">Problem Solved</h4>
                       <p className="text-gray-600">{service.problemSolved}</p>
                     </div>
-                    <div>
+                    <div className="mb-4">
                       <h4 className="font-semibold text-gray-700 mb-2">Scenario & Solution</h4>
                       <p className="text-gray-600">{service.scenarioAndSolution}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-700 mb-2">Step-by-Step Usage</h4>
+                      <p className="text-gray-600 text-sm">{service.simpleStepByStepUsage}</p>
                     </div>
                   </div>
                 )}

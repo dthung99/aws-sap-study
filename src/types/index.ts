@@ -4,6 +4,7 @@ export interface AWSService {
   knowledgeDepth: number;
   problemSolved: string;
   scenarioAndSolution: string;
+  simpleStepByStepUsage: string;
 }
 
 export interface UserProgress {
