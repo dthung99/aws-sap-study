@@ -11,6 +11,7 @@ export function AllServicesView({ services, onBack }: AllServicesViewProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedDepth, setSelectedDepth] = useState<number | 'all'>('all');
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const categories = useMemo(() => {
     const cats = [...new Set(services.map((s) => s.category))];
@@ -40,6 +41,12 @@ export function AllServicesView({ services, onBack }: AllServicesViewProps) {
         {labels[depth] || 'Unknown'}
       </span>
     );
+  };
+
+  const copyToClipboard = (text: string, index: number) => {
+    navigator.clipboard.writeText(text);
+    setCopiedIndex(index);
+    setTimeout(() => setCopiedIndex(null), 2000);
   };
 
   return (
@@ -134,7 +141,31 @@ export function AllServicesView({ services, onBack }: AllServicesViewProps) {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-2">{service.serviceName}</h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-lg font-semibold text-gray-800">{service.serviceName}</h3>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            copyToClipboard(service.serviceName, index);
+                          }}
+                          className={`p-1.5 rounded transition-all cursor-pointer ${
+                            copiedIndex === index
+                              ? 'bg-green-100 text-green-600'
+                              : 'text-gray-400 hover:text-gray-600 hover:bg-gray-200'
+                          }`}
+                          title={copiedIndex === index ? 'Copied!' : 'Copy service name'}
+                        >
+                          {copiedIndex === index ? (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          ) : (
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
                       <div className="flex flex-wrap gap-2 items-center">
                         <span className="text-sm text-gray-500">{service.category}</span>
                         {getDepthBadge(service.knowledgeDepth)}
