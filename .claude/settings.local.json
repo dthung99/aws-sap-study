@@ -14,7 +14,8 @@
       "Bash(npx husky install)",
       "Bash(npx husky:*)",
       "Bash(npm run lint:*)",
-      "WebFetch(domain:aws-sap-study.dthung.com)"
+      "WebFetch(domain:aws-sap-study.dthung.com)",
+      "Bash(python:*)"
     ]
   }
 }

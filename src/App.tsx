@@ -5,11 +5,14 @@ import { useProgress } from './hooks/useProgress';
 import { MenuView } from './components/MenuView';
 import { AllServicesView } from './components/AllServicesView';
 import { FlashcardView } from './components/FlashcardView';
-import { QAView } from './components/QAView';
+import { ShortQuizView } from './components/ShortQuizView';
+import { AdvancedQAView } from './components/AdvancedQAView';
+import { AdvancedQAQuizView } from './components/AdvancedQAQuizView';
 import { TinderView } from './components/TinderView';
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewMode>('menu');
+  const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
   const { services, loading, error } = useAWSServices();
   const { progress } = useProgress();
 
@@ -17,9 +20,17 @@ function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1) || 'menu';
-      const validViews: ViewMode[] = ['menu', 'all-services', 'flashcards', 'qa', 'tinder'];
-      if (validViews.includes(hash as ViewMode)) {
-        setCurrentView(hash as ViewMode);
+      const [view, queryString] = hash.split('?');
+      const validViews: ViewMode[] = ['menu', 'all-services', 'flashcards', 'shortquiz', 'advanced-qa', 'advanced-qa-quiz', 'tinder'];
+
+      if (validViews.includes(view as ViewMode)) {
+        setCurrentView(view as ViewMode);
+
+        // Parse package ID from query string if present
+        if (view === 'advanced-qa-quiz' && queryString) {
+          const params = new URLSearchParams(queryString);
+          setSelectedPackageId(params.get('pkg'));
+        }
       } else {
         setCurrentView('menu');
         window.location.hash = '#menu';
@@ -40,6 +51,10 @@ function App() {
 
   const handleSelectMode = (mode: Exclude<ViewMode, 'menu'>) => {
     window.location.hash = `#${mode}`;
+  };
+
+  const handleStartQAPackage = (packageId: string) => {
+    window.location.hash = `#advanced-qa-quiz?pkg=${packageId}`;
   };
 
   if (loading) {
@@ -87,8 +102,24 @@ function App() {
         <FlashcardView services={services} onBack={handleBackToMenu} />
       )}
 
-      {currentView === 'qa' && (
-        <QAView services={services} onBack={handleBackToMenu} />
+      {currentView === 'shortquiz' && (
+        <ShortQuizView services={services} onBack={handleBackToMenu} />
+      )}
+
+      {currentView === 'advanced-qa' && (
+        <AdvancedQAView
+          services={services}
+          onBack={handleBackToMenu}
+          onStartPackage={handleStartQAPackage}
+        />
+      )}
+
+      {currentView === 'advanced-qa-quiz' && selectedPackageId && (
+        <AdvancedQAQuizView
+          services={services}
+          packageId={selectedPackageId}
+          onBack={handleBackToMenu}
+        />
       )}
 
       {currentView === 'tinder' && (

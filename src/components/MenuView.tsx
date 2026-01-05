@@ -47,7 +47,7 @@ export function MenuView({ onSelectMode, progress }: MenuViewProps) {
         </div>
 
         {/* Feature Selection Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* All Services */}
           <button
             onClick={() => onSelectMode('all-services')}
@@ -72,19 +72,7 @@ export function MenuView({ onSelectMode, progress }: MenuViewProps) {
             </p>
           </button>
 
-          {/* Q&A */}
-          <button
-            onClick={() => onSelectMode('qa')}
-            className="group relative bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
-          >
-            <div className="text-4xl mb-3">❓</div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Q&A Quiz</h2>
-            <p className="text-gray-600">
-              Test your knowledge with multiple choice questions
-            </p>
-          </button>
-
-          {/* Tinder Mode */}
+          {/* Swipe Mode */}
           <button
             onClick={() => onSelectMode('tinder')}
             className="group relative bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
@@ -93,6 +81,30 @@ export function MenuView({ onSelectMode, progress }: MenuViewProps) {
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Swipe Mode</h2>
             <p className="text-gray-600">
               Swipe cards to quickly review and rate your knowledge
+            </p>
+          </button>
+
+          {/* Short Quiz */}
+          <button
+            onClick={() => onSelectMode('shortquiz')}
+            className="group relative bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+          >
+            <div className="text-4xl mb-3">⚡</div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Short Quiz</h2>
+            <p className="text-gray-600">
+              Quick 20-question quiz with auto-generated questions
+            </p>
+          </button>
+
+          {/* Advanced Q&A */}
+          <button
+            onClick={() => onSelectMode('advanced-qa')}
+            className="group relative bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+          >
+            <div className="text-4xl mb-3">📚</div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Advanced Q&A</h2>
+            <p className="text-gray-600">
+              Create practice packages from structured QA questions
             </p>
           </button>
         </div>
