@@ -60,7 +60,7 @@ function App() {
           <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Data</h2>
           <p className="text-gray-700 mb-6">{error}</p>
           <p className="text-gray-600 text-sm">
-            Make sure the aws_services_note.csv file is in the public folder.
+            Make sure the aws_services_note.jsonl file is in the public folder.
           </p>
         </div>
       </div>

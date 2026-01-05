@@ -40,15 +40,6 @@ export function TinderView({ services, onBack }: TinderViewProps) {
     setShowComplete(false);
   }, [services]);
 
-  // Auto-flip card after 2 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isFlipped && shuffled.length > 0) {
-        setIsFlipped(true);
-      }
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [currentIndex, isFlipped, shuffled.length]);
 
   const handleNextCard = useCallback(() => {
     if (currentIndex + 1 >= shuffled.length) {
@@ -149,6 +140,63 @@ export function TinderView({ services, onBack }: TinderViewProps) {
 
   const currentService = shuffled[currentIndex];
   const remaining = shuffled.length - currentIndex - 1;
+
+  // Safety check: if currentService is undefined, show completion screen
+  if (!currentService) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-600 to-teal-800 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl">
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">
+            Session Complete!
+          </h2>
+
+          <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="bg-green-50 rounded-lg p-4">
+              <p className="text-3xl font-bold text-green-600">
+                {sessionStats.known}
+              </p>
+              <p className="text-gray-600 font-semibold mt-2">Know It</p>
+            </div>
+            <div className="bg-yellow-50 rounded-lg p-4">
+              <p className="text-3xl font-bold text-yellow-600">
+                {sessionStats.learning}
+              </p>
+              <p className="text-gray-600 font-semibold mt-2">Review</p>
+            </div>
+          </div>
+
+          <p className="text-gray-600 mb-6">
+            {sessionStats.known === shuffled.length
+              ? "🎉 Perfect! You know all these services!"
+              : sessionStats.known > sessionStats.learning
+              ? "👍 Great job! Keep it up!"
+              : "💪 Keep practicing!"}
+          </p>
+
+          <button
+            onClick={() => {
+              setShuffled(shuffleArray(services));
+              setCurrentIndex(0);
+              setSessionStats({ known: 0, learning: 0 });
+              setShowComplete(false);
+              setIsFlipped(false);
+              setCardState({ rotation: 0, translateX: 0, opacity: 1 });
+            }}
+            className="w-full px-6 py-3 bg-green-600 text-white rounded-lg font-bold hover:bg-green-700 transition-colors mb-4"
+          >
+            Try Again
+          </button>
+
+          <button
+            onClick={onBack}
+            className="w-full px-6 py-3 bg-gray-200 text-gray-800 rounded-lg font-bold hover:bg-gray-300 transition-colors"
+          >
+            Back to Menu
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   // Mouse/Touch tracking
   const handleMouseDown = (e: React.MouseEvent) => {

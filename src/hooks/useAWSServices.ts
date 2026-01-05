@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import type { AWSService } from '../types';
-import { parseAWSServicesCSV } from '../utils/csvParser';
 
 export function useAWSServices() {
   const [services, setServices] = useState<AWSService[]>([]);
@@ -10,10 +9,20 @@ export function useAWSServices() {
   useEffect(() => {
     const loadServices = async () => {
       try {
-        const response = await fetch('/aws_services_note.csv');
-        if (!response.ok) throw new Error('Failed to load CSV');
-        const csvContent = await response.text();
-        const parsedServices = parseAWSServicesCSV(csvContent);
+        const response = await fetch('/aws_services_note.jsonl');
+        if (!response.ok) throw new Error('Failed to load JSONL');
+        const jsonlContent = await response.text();
+        const lines = jsonlContent.trim().split('\n');
+        const parsedServices: AWSService[] = lines
+          .filter(line => line.trim())
+          .map(line => JSON.parse(line))
+          .map(obj => ({
+            category: obj.category,
+            serviceName: obj.serviceName,
+            knowledgeDepth: obj.knowledgeDepth,
+            problemSolved: obj.problemSolved,
+            scenarioAndSolution: obj.scenarioAndSolution,
+          }));
         setServices(parsedServices);
         setError(null);
       } catch (err) {
