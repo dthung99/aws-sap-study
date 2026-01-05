@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import type { AWSService, QAQuestion } from '../types';
 import { useQAPackages } from '../hooks/useQAPackages';
 
 interface AdvancedQAQuizViewProps {
   services: AWSService[];
-  packageId: string;
   onBack: () => void;
 }
 
-export function AdvancedQAQuizView({ services, packageId, onBack }: AdvancedQAQuizViewProps) {
+export function AdvancedQAQuizView({ services, onBack }: AdvancedQAQuizViewProps) {
+  const { packageId } = useParams<{ packageId: string }>();
+  const routeNavigate = useNavigate();
   const { config, updateProgress } = useQAPackages(services);
 
   const [questions, setQuestions] = useState<QAQuestion[]>([]);
@@ -26,7 +28,7 @@ export function AdvancedQAQuizView({ services, packageId, onBack }: AdvancedQAQu
     const pkg = config.packages.find((p) => p.id === packageId);
     if (!pkg) {
       // Package not found, go back
-      window.location.hash = '#advanced-qa';
+      routeNavigate('/advanced-qa');
       return;
     }
 
@@ -55,8 +57,10 @@ export function AdvancedQAQuizView({ services, packageId, onBack }: AdvancedQAQu
     const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
 
     const handleComplete = () => {
-      updateProgress(packageId, score, totalQuestions);
-      window.location.hash = '#advanced-qa';
+      if (packageId) {
+        updateProgress(packageId, score, totalQuestions);
+      }
+      routeNavigate('/advanced-qa');
     };
 
     return (
@@ -133,7 +137,7 @@ export function AdvancedQAQuizView({ services, packageId, onBack }: AdvancedQAQu
         </div>
         <button
           onClick={() => {
-            window.location.hash = '#advanced-qa';
+            routeNavigate('/advanced-qa');
           }}
           className="px-4 py-2 bg-white text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition-colors"
         >
@@ -162,15 +166,6 @@ export function AdvancedQAQuizView({ services, packageId, onBack }: AdvancedQAQu
         <div className="max-w-3xl w-full bg-white rounded-2xl shadow-2xl p-8">
           {/* Question */}
           <h2 className="text-2xl font-bold text-gray-800 mb-8">{currentQuestion.question}</h2>
-
-          {/* Service Context */}
-          {currentQuestion.serviceName && (
-            <div className="bg-purple-50 rounded-lg p-4 mb-8 border-l-4 border-purple-600 text-sm text-purple-900">
-              <p className="font-semibold">Service Category:</p>
-              <p>{currentQuestion.serviceName}</p>
-              {currentQuestion.category && <p className="text-purple-700">Category: {currentQuestion.category}</p>}
-            </div>
-          )}
 
           {/* Options */}
           <div className="grid grid-cols-1 gap-4 mb-8">
@@ -208,37 +203,48 @@ export function AdvancedQAQuizView({ services, packageId, onBack }: AdvancedQAQu
 
           {/* Feedback */}
           {answered && (
-            <div
-              className={`rounded-lg p-4 mb-8 ${
-                isCorrect
-                  ? 'bg-green-50 border-l-4 border-green-600 text-green-800'
-                  : 'bg-red-50 border-l-4 border-red-600 text-red-800'
-              }`}
-            >
-              {isCorrect ? (
-                <div>
-                  <p>
-                    <span className="font-bold">Correct!</span> The answer is{' '}
-                    <span className="font-semibold">{currentQuestion.answer}</span>.
-                  </p>
-                  {currentQuestion.explanation && (
-                    <p className="text-sm mt-3">{currentQuestion.explanation}</p>
-                  )}
-                </div>
-              ) : (
-                <div>
-                  <p className="font-bold mb-2">Incorrect</p>
-                  <p className="text-sm mb-3">
-                    The correct answer is <span className="font-semibold">{currentQuestion.answer}</span>.
-                  </p>
-                  {currentQuestion.explanation && (
-                    <p className="text-sm bg-white bg-opacity-30 rounded p-3 mt-3">
-                      {currentQuestion.explanation}
+            <>
+              <div
+                className={`rounded-lg p-4 mb-8 ${
+                  isCorrect
+                    ? 'bg-green-50 border-l-4 border-green-600 text-green-800'
+                    : 'bg-red-50 border-l-4 border-red-600 text-red-800'
+                }`}
+              >
+                {isCorrect ? (
+                  <div>
+                    <p>
+                      <span className="font-bold">Correct!</span> The answer is{' '}
+                      <span className="font-semibold">{currentQuestion.answer}</span>.
                     </p>
-                  )}
+                    {currentQuestion.explanation && (
+                      <p className="text-sm mt-3">{currentQuestion.explanation}</p>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    <p className="font-bold mb-2">Incorrect</p>
+                    <p className="text-sm mb-3">
+                      The correct answer is <span className="font-semibold">{currentQuestion.answer}</span>.
+                    </p>
+                    {currentQuestion.explanation && (
+                      <p className="text-sm bg-white bg-opacity-30 rounded p-3 mt-3">
+                        {currentQuestion.explanation}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Service Context */}
+              {currentQuestion.serviceName && (
+                <div className="bg-purple-50 rounded-lg p-4 mb-8 border-l-4 border-purple-600 text-sm text-purple-900">
+                  <p className="font-semibold">Service Category:</p>
+                  <p>{currentQuestion.serviceName}</p>
+                  {currentQuestion.category && <p className="text-purple-700">Category: {currentQuestion.category}</p>}
                 </div>
               )}
-            </div>
+            </>
           )}
 
           {/* Next Button */}

@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQAPackages } from "../hooks/useQAPackages";
 import type { AWSService } from "../types";
 
 interface AdvancedQAViewProps {
   services: AWSService[];
   onBack: () => void;
-  onStartPackage: (packageId: string) => void;
 }
 
-export function AdvancedQAView({ services, onBack, onStartPackage }: AdvancedQAViewProps) {
+export function AdvancedQAView({ services, onBack }: AdvancedQAViewProps) {
+  const navigate = useNavigate();
   const {
     config,
     progress,
@@ -59,7 +60,7 @@ export function AdvancedQAView({ services, onBack, onStartPackage }: AdvancedQAV
   };
 
   const handleStartPackage = (packageId: string) => {
-    onStartPackage(packageId);
+    navigate(`/advanced-qa-quiz/${packageId}`);
   };
 
   const formatDate = (dateString: string) => {

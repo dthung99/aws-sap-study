@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import type { ViewMode } from './types';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useAWSServices } from './hooks/useAWSServices';
 import { useProgress } from './hooks/useProgress';
 import { MenuView } from './components/MenuView';
@@ -9,52 +8,19 @@ import { ShortQuizView } from './components/ShortQuizView';
 import { AdvancedQAView } from './components/AdvancedQAView';
 import { AdvancedQAQuizView } from './components/AdvancedQAQuizView';
 import { TinderView } from './components/TinderView';
+import type { ViewMode } from './types';
 
 function App() {
-  const [currentView, setCurrentView] = useState<ViewMode>('menu');
-  const [selectedPackageId, setSelectedPackageId] = useState<string | null>(null);
   const { services, loading, error } = useAWSServices();
   const { progress } = useProgress();
-
-  // Handle URL-based routing
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.slice(1) || 'menu';
-      const [view, queryString] = hash.split('?');
-      const validViews: ViewMode[] = ['menu', 'all-services', 'flashcards', 'shortquiz', 'advanced-qa', 'advanced-qa-quiz', 'tinder'];
-
-      if (validViews.includes(view as ViewMode)) {
-        setCurrentView(view as ViewMode);
-
-        // Parse package ID from query string if present
-        if (view === 'advanced-qa-quiz' && queryString) {
-          const params = new URLSearchParams(queryString);
-          setSelectedPackageId(params.get('pkg'));
-        }
-      } else {
-        setCurrentView('menu');
-        window.location.hash = '#menu';
-      }
-    };
-
-    // Set initial view from URL
-    handleHashChange();
-
-    // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  const navigate = useNavigate();
 
   const handleBackToMenu = () => {
-    window.location.hash = '#menu';
+    navigate('/');
   };
 
   const handleSelectMode = (mode: Exclude<ViewMode, 'menu'>) => {
-    window.location.hash = `#${mode}`;
-  };
-
-  const handleStartQAPackage = (packageId: string) => {
-    window.location.hash = `#advanced-qa-quiz?pkg=${packageId}`;
+    navigate(`/${mode}`);
   };
 
   if (loading) {
@@ -84,47 +50,29 @@ function App() {
 
   return (
     <div className="min-h-screen">
-      {currentView === 'menu' && (
-        <MenuView
-          onSelectMode={handleSelectMode}
-          progress={{
-            masteredCount: progress.masteredServices.length,
-            totalServices: services.length,
-          }}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <MenuView
+              onSelectMode={handleSelectMode}
+              progress={{
+                masteredCount: progress.masteredServices.length,
+                totalServices: services.length,
+              }}
+            />
+          }
         />
-      )}
-
-      {currentView === 'all-services' && (
-        <AllServicesView services={services} onBack={handleBackToMenu} />
-      )}
-
-      {currentView === 'flashcards' && (
-        <FlashcardView services={services} onBack={handleBackToMenu} />
-      )}
-
-      {currentView === 'shortquiz' && (
-        <ShortQuizView services={services} onBack={handleBackToMenu} />
-      )}
-
-      {currentView === 'advanced-qa' && (
-        <AdvancedQAView
-          services={services}
-          onBack={handleBackToMenu}
-          onStartPackage={handleStartQAPackage}
+        <Route path="/all-services" element={<AllServicesView services={services} onBack={handleBackToMenu} />} />
+        <Route path="/flashcards" element={<FlashcardView services={services} onBack={handleBackToMenu} />} />
+        <Route path="/shortquiz" element={<ShortQuizView services={services} onBack={handleBackToMenu} />} />
+        <Route
+          path="/advanced-qa"
+          element={<AdvancedQAView services={services} onBack={handleBackToMenu} />}
         />
-      )}
-
-      {currentView === 'advanced-qa-quiz' && selectedPackageId && (
-        <AdvancedQAQuizView
-          services={services}
-          packageId={selectedPackageId}
-          onBack={handleBackToMenu}
-        />
-      )}
-
-      {currentView === 'tinder' && (
-        <TinderView services={services} onBack={handleBackToMenu} />
-      )}
+        <Route path="/advanced-qa-quiz/:packageId" element={<AdvancedQAQuizView services={services} onBack={handleBackToMenu} />} />
+        <Route path="/tinder" element={<TinderView services={services} onBack={handleBackToMenu} />} />
+      </Routes>
     </div>
   );
 }
