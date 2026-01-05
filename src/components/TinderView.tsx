@@ -351,7 +351,7 @@ export function TinderView({ services, onBack }: TinderViewProps) {
       </div>
 
       {/* Card Stack */}
-      <div className="flex-1 w-full max-w-2xl flex items-center justify-center mb-8">
+      <div className="flex-1 w-full max-w-2xl flex items-center justify-center mb-4 md:mb-8">
         <div
           ref={cardRef}
           onMouseDown={handleMouseDown}
@@ -362,46 +362,43 @@ export function TinderView({ services, onBack }: TinderViewProps) {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onClick={() => !isDragging && setIsFlipped(!isFlipped)}
-          className="relative w-full max-w-sm h-96 bg-white rounded-3xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden transition-all"
+          className="relative w-full max-w-sm h-72 md:h-96 bg-white rounded-3xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden transition-all"
           style={{
             transform: `translateX(${cardState.translateX}px) rotateZ(${cardState.rotation}deg)`,
             opacity: cardState.opacity,
           }}
         >
           {/* Card Content */}
-          <div className="w-full h-full flex items-center justify-center p-8 text-center">
+          <div className="w-full h-full flex items-center justify-center p-4 md:p-8 text-center">
             {!isFlipped ? (
               <div>
-                <p className="text-gray-400 text-sm font-medium mb-4">
+                <p className="text-gray-400 text-xs md:text-sm font-medium mb-2 md:mb-4">
                   SERVICE
                 </p>
-                <h2 className="text-4xl font-bold text-pink-600 mb-6 break-words">
+                <h2 className="text-2xl md:text-4xl font-bold text-pink-600 mb-2 md:mb-6 break-words">
                   {currentService.serviceName}
                 </h2>
-                <p className="text-gray-600 mb-8 text-lg font-semibold">
+                <p className="text-gray-600 mb-4 md:mb-8 text-sm md:text-lg font-semibold">
                   {currentService.category}
                 </p>
-                <p className="text-sm text-gray-400 animate-bounce">
+                <p className="text-xs md:text-sm text-gray-400 animate-bounce">
                   Click to reveal →
                 </p>
               </div>
             ) : (
-              <div className="text-left max-h-80 overflow-y-auto">
-                <p className="text-lg font-bold text-gray-800 mb-6">
+              <div className="text-left max-h-56 md:max-h-80 overflow-y-auto pr-2">
+                <p className="text-sm md:text-base font-semibold text-gray-800 leading-relaxed mb-2 md:mb-4">
                   {currentService.problemSolved}
                 </p>
-                <hr className="my-4 border-gray-300" />
-                <p className="text-xs font-semibold text-pink-600 uppercase tracking-wider mb-2">
-                  Solution
-                </p>
-                <p className="text-sm text-gray-700 leading-relaxed mb-4">
+                <hr className="my-1 md:my-2 border-gray-300" />
+                <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-2 md:mb-4">
                   {currentService.scenarioAndSolution}
                 </p>
-                <hr className="my-4 border-gray-300" />
-                <p className="text-xs font-semibold text-pink-600 uppercase tracking-wider mb-2">
+                <hr className="my-1 md:my-2 border-gray-300" />
+                <p className="text-xs font-semibold text-pink-600 uppercase tracking-wider mb-1 md:mb-2">
                   How to Use
                 </p>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
                   {currentService.simpleStepByStepUsage}
                 </p>
               </div>

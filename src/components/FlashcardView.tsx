@@ -129,47 +129,44 @@ export function FlashcardView({ services, onBack }: FlashcardViewProps) {
       </div>
 
       {/* Card */}
-      <div className="w-full max-w-2xl mb-8">
+      <div className="w-full max-w-2xl mb-4 md:mb-8">
         <button
           onClick={() => setIsFlipped(!isFlipped)}
-          className="w-full h-80 bg-white rounded-2xl shadow-2xl cursor-pointer transform transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300 relative overflow-hidden"
+          className="w-full h-64 md:h-80 bg-white rounded-2xl shadow-2xl cursor-pointer transform transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300 relative overflow-hidden"
         >
           <div
-            className={`w-full h-full flex items-center justify-center p-8 text-center transition-all duration-500 ${
+            className={`w-full h-full flex items-center justify-center p-4 md:p-8 text-center transition-all duration-500 ${
               isFlipped ? "bg-blue-50" : "bg-white"
             }`}
           >
             <div>
               {!isFlipped ? (
                 <div>
-                  <p className="text-gray-500 text-sm font-medium mb-4">
+                  <p className="text-gray-500 text-xs md:text-sm font-medium mb-2 md:mb-4">
                     SERVICE NAME
                   </p>
-                  <h2 className="text-4xl font-bold text-purple-600 mb-4">
+                  <h2 className="text-2xl md:text-4xl font-bold text-purple-600 mb-2 md:mb-4">
                     {currentService.serviceName}
                   </h2>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-600 mb-2 md:mb-6 text-sm md:text-base">
                     {currentService.category}
                   </p>
-                  <p className="text-sm text-gray-400">Click to reveal</p>
+                  <p className="text-xs md:text-sm text-gray-400">Click to reveal</p>
                 </div>
               ) : (
-                <div className="text-left max-h-72 overflow-y-auto">
-                  <p className="text-lg font-semibold text-gray-800 mb-6">
+                <div className="text-left max-h-56 md:max-h-72 overflow-y-auto pr-2">
+                  <p className="text-sm md:text-base font-semibold text-gray-800 leading-relaxed mb-2 md:mb-4">
                     {currentService.problemSolved}
                   </p>
-                  <hr className="my-4 border-gray-300" />
-                  <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-2">
-                    Scenario & Solution
-                  </p>
-                  <p className="text-sm text-gray-700 leading-relaxed mb-4">
+                  <hr className="my-1 md:my-2 border-gray-300" />
+                  <p className="text-xs md:text-sm text-gray-700 leading-relaxed mb-2 md:mb-4">
                     {currentService.scenarioAndSolution}
                   </p>
-                  <hr className="my-4 border-gray-300" />
-                  <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-2">
+                  <hr className="my-1 md:my-2 border-gray-300" />
+                  <p className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1 md:mb-2">
                     How to Use
                   </p>
-                  <p className="text-sm text-gray-700 leading-relaxed">
+                  <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
                     {currentService.simpleStepByStepUsage}
                   </p>
                 </div>
