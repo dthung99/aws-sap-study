@@ -61,4 +61,4 @@ export interface QAPackageProgress {
   };
 }
 
-export type ViewMode = 'menu' | 'all-services' | 'flashcards' | 'qa' | 'tinder' | 'shortquiz' | 'advanced-qa' | 'advanced-qa-quiz';
+export type ViewMode = 'menu' | 'all-services' | 'flashcards' | 'qa' | 'tinder' | 'shortquiz' | 'advanced-qa' | 'advanced-qa-quiz' | 'online-materials';

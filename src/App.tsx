@@ -8,6 +8,7 @@ import { ShortQuizView } from './components/ShortQuizView';
 import { AdvancedQAView } from './components/AdvancedQAView';
 import { AdvancedQAQuizView } from './components/AdvancedQAQuizView';
 import { TinderView } from './components/TinderView';
+import { OnlineMaterialsView } from './components/OnlineMaterialsView';
 import type { ViewMode } from './types';
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
         />
         <Route path="/advanced-qa-quiz/:packageId" element={<AdvancedQAQuizView services={services} onBack={handleBackToMenu} />} />
         <Route path="/tinder" element={<TinderView services={services} onBack={handleBackToMenu} />} />
+        <Route path="/online-materials" element={<OnlineMaterialsView onBack={handleBackToMenu} />} />
       </Routes>
     </div>
   );

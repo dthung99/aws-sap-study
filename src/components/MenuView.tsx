@@ -107,6 +107,18 @@ export function MenuView({ onSelectMode, progress }: MenuViewProps) {
               Create practice packages from structured QA questions
             </p>
           </button>
+
+          {/* Online Materials */}
+          <button
+            onClick={() => onSelectMode('online-materials')}
+            className="group relative bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+          >
+            <div className="text-4xl mb-3">🔗</div>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Online Materials</h2>
+            <p className="text-gray-600">
+              Access curated external resources and study materials
+            </p>
+          </button>
         </div>
 
         {/* Footer */}
@@ -115,15 +127,15 @@ export function MenuView({ onSelectMode, progress }: MenuViewProps) {
           <button
             onClick={() => {
               const link = document.createElement('a');
-              link.href = '/aws_services_note.csv';
-              link.download = 'aws_services_note.csv';
+              link.href = '/aws_services_note.jsonl';
+              link.download = 'aws_services_note.jsonl';
               document.body.appendChild(link);
               link.click();
               document.body.removeChild(link);
             }}
             className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-lg font-bold hover:bg-blue-50 transition-colors shadow-lg"
           >
-            📥 Download CSV
+            📥 Download JSONL
           </button>
         </div>
       </div>
